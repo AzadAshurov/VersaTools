@@ -19,4 +19,10 @@
     <ProjectReference Include="..\..\Core\VersaTools.Application\VersaTools.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Implementations\Services\" />
+    <Folder Include="Implementations\Repositories\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>
