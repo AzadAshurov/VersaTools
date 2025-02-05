@@ -14,7 +14,7 @@ namespace VersaTools.Persistence.DAL
         public AppDbContext(DbContextOptions<AppDbContext> options)
        : base(options)
         {
-        }
+        }   
         public DbSet<Question> Questions { get; set; }
         public DbSet<Response> Responses { get; set; }
         public DbSet<Complaint> Complaints { get; set; }
