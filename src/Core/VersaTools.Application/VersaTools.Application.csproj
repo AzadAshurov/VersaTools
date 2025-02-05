@@ -10,9 +10,4 @@
     <ProjectReference Include="..\VersaTools.Domain\VersaTools.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstractions\Services\" />
-    <Folder Include="DTOs\" />
-  </ItemGroup>
-
 </Project>
