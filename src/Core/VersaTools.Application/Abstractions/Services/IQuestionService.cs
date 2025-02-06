@@ -10,9 +10,9 @@ namespace VersaTools.Application.Abstractions.Services
     public interface IQuestionService
     {
         Task<IEnumerable<QuestionsDTO>> GetAllAsync(int page, int take);
-        Task<GetQuestionDTO> GetByIdAsync(int id);
-        Task CreateAsync(CreateQuestionDTO colorDTO);
-        Task UpdateQuestionAsync(int id, UpdateQuestionDTO questionDTO);
+        //Task<GetQuestionDTO> GetByIdAsync(int id);
+        //Task CreateAsync(CreateQuestionDTO colorDTO);
+        //Task UpdateQuestionAsync(int id, UpdateQuestionDTO questionDTO);
         Task DeleteQuestionAsync(int id);
     }
 }
