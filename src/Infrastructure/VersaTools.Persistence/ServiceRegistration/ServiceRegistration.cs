@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
-using VersaTools.Domain.Entitities.Identity;
+using VersaTools.Application.Abstractions.Repositories.Generic;
+using VersaTools.Application.Abstractions.Services;
 using VersaTools.Persistence.DAL;
+using VersaTools.Persistence.Implementations.Repositories;
+using VersaTools.Persistence.Implementations.Repositories.Generic;
+using VersaTools.Persistence.Implementations.Services;
 
 namespace VersaTools.Persistence.ServiceRegistration
 {
@@ -21,18 +24,9 @@ namespace VersaTools.Persistence.ServiceRegistration
                 );
 
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<AppDbContext>()
-                .AddDefaultTokenProviders();
-
-            
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-
-        
-           
-
-
-
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             return services;
         }
     }

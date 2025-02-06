@@ -7,7 +7,7 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Application.Abstractions.Repositories.Generic
 {
-    internal interface IQuestionRepository : IRepository<Question>
+    public interface IQuestionRepository : IRepository<Question>
     {
     }
 }

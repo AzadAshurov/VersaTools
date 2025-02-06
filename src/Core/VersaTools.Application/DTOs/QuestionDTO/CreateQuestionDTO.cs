@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VersaTools.Application.DTOs.ResponseDTO
+namespace VersaTools.Application.DTOs.QuestionDTO
 {
-    internal class GetQuestionDTO
-    {
-    }
+  public record CreateQuestionDTO( string Title ,string MainText);
+   
 }
- 
