@@ -53,7 +53,7 @@ namespace VersaTools.Persistence.Implementations.Services
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null) return null;
 
-            // Optionally check email confirmation
+            // Optionally check email confirmation  ftg
             // if (!await _userManager.IsEmailConfirmedAsync(user)) return null;
 
             var result = await _signInManager.PasswordSignInAsync(user, model.Password, false, true); // Enable lockout

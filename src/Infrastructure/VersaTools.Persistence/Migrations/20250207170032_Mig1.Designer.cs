@@ -12,7 +12,7 @@ using VersaTools.Persistence.DAL;
 namespace VersaTools.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250204102154_Mig1")]
+    [Migration("20250207170032_Mig1")]
     partial class Mig1
     {
         /// <inheritdoc />

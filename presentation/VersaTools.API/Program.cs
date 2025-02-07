@@ -1,13 +1,11 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.IdentityModel.Tokens;
-using VersaTools.Domain.Entitities.Identity;
+
 using VersaTools.Persistence.ServiceRegistration;
 using Microsoft.AspNetCore.Authentication;
-using System;
-using VersaTools.Persistence.DAL;
+
 public class Program
 {
     public static void Main(string[] args)

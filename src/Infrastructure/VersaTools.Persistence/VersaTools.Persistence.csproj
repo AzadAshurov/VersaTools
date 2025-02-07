@@ -21,8 +21,4 @@
     <ProjectReference Include="..\..\Core\VersaTools.Application\VersaTools.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
 </Project>
