@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using VersaTools.Application.Abstractions.Repositories.Generic;
 using VersaTools.Application.Abstractions.Services;
@@ -30,21 +31,31 @@ namespace VersaTools.Persistence.Implementations.Services
                 UpdatedAt = DateTime.Now,
                 MainText = questionDTO.MainText,
                 Title = questionDTO.Title,
-                SpecificId = Guid.NewGuid().ToString()
+                SpecificId = "QUES" + Guid.NewGuid().ToString()
             };
           await _questionRepository.AddAsync(question);
             await _questionRepository.SaveChangesAsync();
         }
 
-        public Task DeleteQuestionAsync(int id)
+        public async Task DeleteQuestionAsync(int id)
         {
-            throw new NotImplementedException();
+            Question question = await _questionRepository.GetByIdAsync(id, "Responses");
+            _questionRepository.Delete(question);
+           await _questionRepository.SaveChangesAsync();
+
         }
 
-        public Task<IEnumerable<QuestionsDTO>> GetAllAsync(int page, int take)
+        public async Task<IEnumerable<QuestionsDTO>> GetAllAsync(int page, int take)
         {
-            throw new NotImplementedException();
+            ICollection<Question> questions = await _questionRepository.GetAll()
+                .Skip((page - 1) * take)
+                .Take(take)
+                .ToListAsync();
+
+            IEnumerable<QuestionsDTO> dto = questions.Select(x => new QuestionsDTO(x.Title));
+            return dto;
         }
+
 
         public async Task<GetQuestionDTO> GetByIdAsync(int id)
         {
@@ -59,9 +70,16 @@ namespace VersaTools.Persistence.Implementations.Services
         }
 
 
-        public Task UpdateQuestionAsync(int id, UpdateQuestionDTO questionDTO)
+        public async Task UpdateQuestionAsync(int id, UpdateQuestionDTO questionDTO)
         {
-            throw new NotImplementedException();
+            Question question = await _questionRepository.GetByIdAsync(id);
+            question.MainText = questionDTO.MainText;
+            question.UpdatedAt = DateTime.Now;
+            question.Title = questionDTO.Title;
+             _questionRepository.Update(question);
+            await _questionRepository.SaveChangesAsync();
+
+
         }
     }
 }

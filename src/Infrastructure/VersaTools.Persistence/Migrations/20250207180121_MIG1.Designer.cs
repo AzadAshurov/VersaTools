@@ -12,8 +12,8 @@ using VersaTools.Persistence.DAL;
 namespace VersaTools.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250207170032_Mig1")]
-    partial class Mig1
+    [Migration("20250207180121_MIG1")]
+    partial class MIG1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
