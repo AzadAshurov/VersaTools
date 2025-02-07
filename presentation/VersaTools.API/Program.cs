@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 using System.Text;
 
 using Microsoft.IdentityModel.Tokens;
@@ -25,21 +25,8 @@ public class Program
         //    builder.Services.AddIdentity<User, IdentityRole>()
         //.AddEntityFrameworkStores<DbContext>()
         // .AddDefaultTokenProviders();
-        var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                    ValidAudience = builder.Configuration["Jwt:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
+      
+       
 
         builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
         //.AddApplicationServices();
