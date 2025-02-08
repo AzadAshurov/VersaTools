@@ -1,15 +1,16 @@
 ﻿
 using System.Reflection;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using VersaTools.Domain.Entitities;
+using VersaTools.Domain.Entitities.Base;
 
 
 
 namespace VersaTools.Persistence.DAL
 {
-   public class AppDbContext : DbContext
+   public class AppDbContext : IdentityDbContext<AppUser>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options)
        : base(options)
@@ -24,6 +25,24 @@ namespace VersaTools.Persistence.DAL
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }
-
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var data = ChangeTracker.Entries<BaseEntity>();
+            foreach (var item in data)
+            {
+                switch (item.State)
+                {
+                    case EntityState.Modified:
+                        item.Entity.UpdatedAt = DateTime.Now;
+                        break;
+                    case EntityState.Added:
+                        
+                        item.Entity.CreatedAt = DateTime.Now;
+                        item.Entity.UpdatedAt = DateTime.Now;
+                        break;
+                }
+            }
+            return base.SaveChangesAsync(cancellationToken);
+        }
     }
 }

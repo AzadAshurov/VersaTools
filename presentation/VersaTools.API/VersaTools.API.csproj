@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.12">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,6 +18,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Core\VersaTools.Application\VersaTools.Application.csproj" />
+    <ProjectReference Include="..\..\src\Core\VersaTools.Domain\VersaTools.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure\VersaTools.Infrastructure\VersaTools.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Infrastructure\VersaTools.Persistence\VersaTools.Persistence.csproj" />
   </ItemGroup>
 

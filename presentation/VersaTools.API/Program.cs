@@ -1,11 +1,8 @@
 
-using System.Text;
-
-using Microsoft.IdentityModel.Tokens;
-
+using VersaTools.Infrastructure.ServiceRegistration;
 using VersaTools.Persistence.ServiceRegistration;
 using Microsoft.AspNetCore.Authentication;
-
+using VersaTools.Application.ServiceRegistration;
 public class Program
 {
     public static void Main(string[] args)
@@ -15,16 +12,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen();
-        builder.Services.AddPersistenceServices(builder.Configuration);
-        //builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-
-        //    builder.Services.AddIdentity<User, IdentityRole>()
-        //.AddEntityFrameworkStores<AppDbContext>()
-        //.AddDefaultTokenProviders();
-
-        //    builder.Services.AddIdentity<User, IdentityRole>()
-        //.AddEntityFrameworkStores<DbContext>()
-        // .AddDefaultTokenProviders();
+        builder.Services.AddPersistenceServices(builder.Configuration).AddInfrastructureServices().AddApplicationServices(); 
       
        
 
