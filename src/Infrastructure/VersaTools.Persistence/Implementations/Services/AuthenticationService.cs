@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VersaTools.Application.Abstractions.Services;
@@ -14,22 +11,42 @@ namespace VersaTools.Persistence.Implementations.Services
 {
     internal class AuthenticationService : IAuthenticationService
     {
-        private readonly UserManager<AppUser> _userManager;
-       
-        private readonly ITokenHandler _handler;
-        //ctrl+r+g
+        private UserManager<AppUser> _userManager;
+        private RoleManager<IdentityRole> _roleManager;
+        private ITokenHandler _handler;
+
+     
+
         public AuthenticationService(
             UserManager<AppUser> userManager,
-           
+            RoleManager<IdentityRole> roleManager,
             ITokenHandler handler
-
-            )
+        )
         {
             _userManager = userManager;
-         
+            _roleManager = roleManager;
             _handler = handler;
         }
 
+       
+        private async Task EnsureRolesExist()
+        {
+            string[] roles = { "MainAdmin", "Moderator", "Member" };
+            foreach (var role in roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(role))
+                    await _roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        public async Task LogoutAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                throw new Exception("User not found");
+
+
+        }
         public async Task<TokenResponseDto> LoginAsync(LoginDto userDto)
         {
             AppUser? user = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName == userDto.UserNameOrEmail || u.Email == userDto.UserNameOrEmail);
@@ -44,23 +61,26 @@ namespace VersaTools.Persistence.Implementations.Services
                 await _userManager.AccessFailedAsync(user);
                 throw new Exception("Username, Email or Password is incorrect");
             }
-            return _handler.CreateToken(user, 15);
+            return await _handler.CreateToken(user, 15);
 
         }
-
         public async Task RegisterAsync(RegisterDto userDto)
         {
             if (await _userManager.Users.AnyAsync(u => u.UserName == userDto.UserName || u.Email == userDto.Email))
                 throw new Exception("User already exist");
- 
-            var result = await _userManager.CreateAsync(new AppUser
+
+            await EnsureRolesExist(); 
+
+            var user = new AppUser
             {
                 Name = userDto.Name,
                 Surname = userDto.Surname,
                 UserName = userDto.UserName,
                 Email = userDto.Email,
                 IsActive = true
-            }, userDto.Password);
+            };
+
+            var result = await _userManager.CreateAsync(user, userDto.Password);
             if (!result.Succeeded)
             {
                 StringBuilder str = new StringBuilder();
@@ -71,6 +91,10 @@ namespace VersaTools.Persistence.Implementations.Services
                 throw new Exception(str.ToString());
             }
 
+          
+            await _userManager.AddToRoleAsync(user, "Member");
         }
+
+     
     }
 }

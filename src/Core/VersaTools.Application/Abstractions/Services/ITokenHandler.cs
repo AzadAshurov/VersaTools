@@ -5,6 +5,6 @@ namespace VersaTools.Application.Abstractions.Services
 {
     public interface ITokenHandler
     {
-        TokenResponseDto CreateToken(AppUser user, int minutes);
+        Task<TokenResponseDto> CreateToken(AppUser user, int minutes);
     }
 }

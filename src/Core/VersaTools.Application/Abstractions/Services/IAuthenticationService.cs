@@ -12,5 +12,7 @@ namespace VersaTools.Application.Abstractions.Services
     {
         Task RegisterAsync(RegisterDto userDto);
         Task<TokenResponseDto> LoginAsync(LoginDto userDto);
+        Task LogoutAsync(string userId);
+    
     }
 }

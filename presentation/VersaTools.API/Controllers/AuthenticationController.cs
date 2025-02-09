@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using VersaTools.Application.Abstractions.Services;
 using VersaTools.Application.DTOs.AppUsers;
@@ -16,7 +18,7 @@ namespace VersaTools.API.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost("[Action]")]
         public async Task<IActionResult> Register([FromForm] RegisterDto userDto)
         {
             await _service.RegisterAsync(userDto);
@@ -27,6 +29,17 @@ namespace VersaTools.API.Controllers
         public async Task<IActionResult> Login([FromForm] LoginDto userDto)
         {
             return Ok(await _service.LoginAsync(userDto));
+        }
+        [Authorize]
+        [HttpPost("[Action]")]
+        public async Task<IActionResult> Logout()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userId))
+                return Unauthorized();
+
+            await _service.LogoutAsync(userId);
+            return NoContent();
         }
     }
 

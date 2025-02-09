@@ -24,7 +24,7 @@ namespace VersaTools.Persistence.ServiceRegistration
                opt.UseSqlServer(configuration.GetConnectionString("Default"),
                m => m.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName)
                ));
-            services.AddIdentityCore<AppUser>(options =>
+            services.AddIdentity<AppUser, IdentityRole>(options =>
             {
                 options.Password.RequiredLength = 8;
                 options.Password.RequireNonAlphanumeric = false;
@@ -33,8 +33,12 @@ namespace VersaTools.Persistence.ServiceRegistration
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
                 options.Lockout.MaxFailedAccessAttempts = 3;
             })
- .AddRoles<IdentityRole>()
- .AddEntityFrameworkStores<AppDbContext>();
+  .AddEntityFrameworkStores<AppDbContext>()
+  .AddDefaultTokenProviders();
+
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
+
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
