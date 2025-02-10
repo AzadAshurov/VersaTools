@@ -9,7 +9,7 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Persistence.Configurations
 {
-    internal class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
+    public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
     {
         public void Configure(EntityTypeBuilder<AppUser> builder)
         {

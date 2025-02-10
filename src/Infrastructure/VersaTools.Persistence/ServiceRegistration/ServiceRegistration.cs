@@ -38,10 +38,7 @@ namespace VersaTools.Persistence.ServiceRegistration
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
-
-
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
+         
             services
                 .AddDbContext<AppDbContext>(opt =>
                     opt.UseSqlServer(configuration.GetConnectionString("Default"))

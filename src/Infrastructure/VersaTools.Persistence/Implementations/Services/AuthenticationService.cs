@@ -1,5 +1,7 @@
 ﻿
+using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VersaTools.Application.Abstractions.Services;
@@ -9,7 +11,7 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Persistence.Implementations.Services
 {
-    internal class AuthenticationService : IAuthenticationService
+    public   class AuthenticationService : IAuthenticationService
     {
         private UserManager<AppUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
@@ -69,7 +71,7 @@ namespace VersaTools.Persistence.Implementations.Services
             if (await _userManager.Users.AnyAsync(u => u.UserName == userDto.UserName || u.Email == userDto.Email))
                 throw new Exception("User already exist");
 
-            await EnsureRolesExist(); 
+            await EnsureRolesExist();
 
             var user = new AppUser
             {
@@ -91,10 +93,11 @@ namespace VersaTools.Persistence.Implementations.Services
                 throw new Exception(str.ToString());
             }
 
-          
+
             await _userManager.AddToRoleAsync(user, "Member");
         }
 
-     
+
     }
 }
+

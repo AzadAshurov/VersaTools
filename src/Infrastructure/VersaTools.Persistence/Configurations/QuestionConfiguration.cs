@@ -9,7 +9,7 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Persistence.Configurations
 {
-    internal class QuestionConfiguration : IEntityTypeConfiguration<Question>
+    public class QuestionConfiguration : IEntityTypeConfiguration<Question>
     {
         public void Configure(EntityTypeBuilder<Question> builder)
         {

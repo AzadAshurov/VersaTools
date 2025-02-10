@@ -9,7 +9,7 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Persistence.Configurations
 {
-    internal class ComplaintConfiguration : IEntityTypeConfiguration<Complaint>
+    public class ComplaintConfiguration : IEntityTypeConfiguration<Complaint>
     {
         public void Configure(EntityTypeBuilder<Complaint> builder)
         {

@@ -4,7 +4,7 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Persistence.Configurations
 {
-    internal class ResponseConfiguration : IEntityTypeConfiguration<Response>
+    public class ResponseConfiguration : IEntityTypeConfiguration<Response>
     {
         public void Configure(EntityTypeBuilder<Response> builder)
         {

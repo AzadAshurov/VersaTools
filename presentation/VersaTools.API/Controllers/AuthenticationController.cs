@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿
 using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
+
+using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.AspNetCore.Mvc;
+
 using VersaTools.Application.Abstractions.Services;
 using VersaTools.Application.DTOs.AppUsers;
 
-namespace VersaTools.API.Controllers
+
+namespace VersaTools.Persistence.Implementations.Services
 {
     [Route("api/[controller]")]
     [ApiController]

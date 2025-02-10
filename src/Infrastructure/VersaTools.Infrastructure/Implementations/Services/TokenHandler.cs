@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -14,7 +12,7 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Infrastructure.Implementations.Services
 {
-    internal class TokenHandler : ITokenHandler
+   public class TokenHandler : ITokenHandler
     {
         private readonly IConfiguration _configuration;
         private readonly UserManager<AppUser> _userManager; 
@@ -44,14 +42,14 @@ namespace VersaTools.Infrastructure.Implementations.Services
             }
 
             var securityKey = new SymmetricSecurityKey(
-                Encoding.ASCII.GetBytes(_configuration["JWT:SecretKey"])
+                Encoding.UTF8.GetBytes(_configuration["JWT:Key"])
             );
 
             var securityToken = new JwtSecurityToken(
-                issuer: _configuration["JWT:issuer"],
-                audience: _configuration["JWT:audience"],
-                expires: DateTime.UtcNow.AddHours(minutes * 100),
-                notBefore: DateTime.Now,
+                issuer: _configuration["JWT:Issuer"],
+                audience: _configuration["JWT:Audience"],
+                expires: DateTime.UtcNow.AddMinutes(minutes),
+                notBefore: DateTime.UtcNow,
                 claims: userClaims,
                 signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
             );

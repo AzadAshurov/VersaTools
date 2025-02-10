@@ -13,6 +13,7 @@ namespace VersaTools.Infrastructure.ServiceRegistration
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
+       services.AddScoped<IAiService, AiService>();
             services.AddScoped<ITokenHandler, TokenHandler>();
             return services;
         }
