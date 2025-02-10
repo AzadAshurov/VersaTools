@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using VersaTools.Application.Abstractions.Services;
 using VersaTools.Infrastructure.Implementations.Services;
+using VersaTools.Persistence.Implementations.Services;
 
 namespace VersaTools.Infrastructure.ServiceRegistration
 {
@@ -14,6 +15,7 @@ namespace VersaTools.Infrastructure.ServiceRegistration
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
        services.AddScoped<IAiService, AiService>();
+            services.AddScoped<ISecondPartOfPasswordService, SecondPartOfPasswordService>();
             services.AddScoped<ITokenHandler, TokenHandler>();
             return services;
         }
