@@ -1,7 +1,4 @@
-﻿
-using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Http;
+﻿using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using VersaTools.Application.Abstractions.Services;
@@ -11,13 +8,13 @@ using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Persistence.Implementations.Services
 {
-    public   class AuthenticationService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private UserManager<AppUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
         private ITokenHandler _handler;
 
-     
+
 
         public AuthenticationService(
             UserManager<AppUser> userManager,
@@ -30,7 +27,7 @@ namespace VersaTools.Persistence.Implementations.Services
             _handler = handler;
         }
 
-       
+
         private async Task EnsureRolesExist()
         {
             string[] roles = { "MainAdmin", "Moderator", "Member" };
