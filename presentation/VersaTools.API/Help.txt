@@ -1,0 +1,25 @@
+﻿start
+docker start versatools-server
+
+
+
+
+stop
+docker stop versatools-server
+
+
+
+
+reload changed files
+docker build -t versatools-server .
+restart
+docker run -d -p 8000:8000 --name versatools-server versatools-server
+
+
+check
+docker ps
+
+
+checking error 
+docker logs YOUR_LOG_ID
+
