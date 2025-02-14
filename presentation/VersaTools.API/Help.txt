@@ -5,7 +5,7 @@ docker start versatools-server
 
 
 stop
-docker stop versatools-server
+docker stop YOUR_LOG_ID
 
 
 
