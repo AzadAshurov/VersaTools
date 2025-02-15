@@ -1,11 +1,13 @@
 ﻿start
-docker start versatools-server
+//docker build -t versatools-server .
+docker run -d -p 8000:8000 --name versatools-server versatools-server
 
 
 
 
 stop
 docker stop YOUR_LOG_ID
+docker stop versatools-server
 
 
 
