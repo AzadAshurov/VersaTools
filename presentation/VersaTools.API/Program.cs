@@ -6,8 +6,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Stripe;
 using VersaTools.Application.ServiceRegistration;
 using VersaTools.Infrastructure.ServiceRegistration;
+using VersaTools.Persistence.DAL;
 using VersaTools.Persistence.ServiceRegistration;
 
 //creating new package
@@ -118,7 +120,8 @@ public class Program
                          .AddApplicationServices();
 
         //builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-
+        builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+        StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe")["SecretKey"];
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())
@@ -132,6 +135,7 @@ public class Program
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
+        StripeConfiguration.ApiKey = app.Configuration.GetSection("Stripe")["SecretKey"];
         app.MapControllers();
         foreach (var endpoint in app.Urls)
         {
