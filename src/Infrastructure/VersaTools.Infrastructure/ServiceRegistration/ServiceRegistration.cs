@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using VersaTools.Application.Abstractions.Services;
 using VersaTools.Infrastructure.Implementations.Services;
-using VersaTools.Persistence.Implementations.Services;
 
 namespace VersaTools.Infrastructure.ServiceRegistration
 {
@@ -14,9 +8,10 @@ namespace VersaTools.Infrastructure.ServiceRegistration
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
-       services.AddScoped<IAiService, AiService>();
+            services.AddScoped<IAiService, AiService>();
             //  services.AddScoped<ISecondPartOfPasswordService, SecondPartOfPasswordService>();
             services.AddScoped<ISecondPartOfPasswordService, CustomEncryptionService>();
+            services.AddScoped<IRandomService, RandomService>();
             services.AddScoped<ITokenHandler, TokenHandler>();
             return services;
         }
