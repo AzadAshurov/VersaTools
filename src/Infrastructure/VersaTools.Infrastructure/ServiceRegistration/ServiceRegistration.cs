@@ -13,6 +13,7 @@ namespace VersaTools.Infrastructure.ServiceRegistration
             services.AddScoped<ISecondPartOfPasswordService, CustomEncryptionService>();
             services.AddScoped<IRandomService, RandomService>();
             services.AddScoped<IKeyboardLayoutService, KeyboardLayoutService>();
+            services.AddScoped<IBarcodeService, BarcodeService>();
 
             services.AddScoped<ITokenHandler, TokenHandler>();
             return services;
