@@ -1,31 +1,32 @@
 ﻿
+
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
+
+
 using VersaTools.Application.Abstractions.Services;
 using VersaTools.Application.DTOs.Tokens;
 using VersaTools.Domain.Entitities;
 
 namespace VersaTools.Infrastructure.Implementations.Services
 {
-   public class TokenHandler : ITokenHandler
+    public class TokenHandler : ITokenHandler
     {
         private readonly IConfiguration _configuration;
-        private readonly UserManager<AppUser> _userManager; 
+        private readonly UserManager<AppUser> _userManager;
 
         public TokenHandler(IConfiguration configuration, UserManager<AppUser> userManager)
         {
             _configuration = configuration;
-            _userManager = userManager; 
+            _userManager = userManager;
         }
 
         public async Task<TokenResponseDto> CreateToken(AppUser user, int minutes)
         {
-            var roles = await _userManager.GetRolesAsync(user); 
+            var roles = await _userManager.GetRolesAsync(user);
 
             var userClaims = new List<Claim>
         {
@@ -38,10 +39,10 @@ namespace VersaTools.Infrastructure.Implementations.Services
 
             foreach (var role in roles)
             {
-                userClaims.Add(new Claim(ClaimTypes.Role, role)); 
+                userClaims.Add(new Claim(ClaimTypes.Role, role));
             }
 
-            var securityKey = new SymmetricSecurityKey(
+            var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(_configuration["JWT:Key"])
             );
 
@@ -51,7 +52,7 @@ namespace VersaTools.Infrastructure.Implementations.Services
                 expires: DateTime.UtcNow.AddMinutes(minutes),
                 notBefore: DateTime.UtcNow,
                 claims: userClaims,
-                signingCredentials: new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256)
+                signingCredentials: new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256)
             );
 
             var handler = new JwtSecurityTokenHandler();

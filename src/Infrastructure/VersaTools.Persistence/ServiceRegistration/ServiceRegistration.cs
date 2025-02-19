@@ -17,7 +17,7 @@ namespace VersaTools.Persistence.ServiceRegistration
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-           
+
             Console.WriteLine(" AddPersistenceServices is being executed!");
             services
                .AddDbContext<AppDbContext>(opt =>
@@ -38,13 +38,9 @@ namespace VersaTools.Persistence.ServiceRegistration
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-         
-            services
-                .AddDbContext<AppDbContext>(opt =>
-                    opt.UseSqlServer(configuration.GetConnectionString("Default"))
-                );
 
-          
+
+
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

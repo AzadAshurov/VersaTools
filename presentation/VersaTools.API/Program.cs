@@ -18,6 +18,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
         //        builder.Services.AddAuthentication(options =>
         //        {
         //            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -66,21 +67,46 @@ public class Program
         }
     });
         });
-
-        builder.Services.AddAuthentication(options =>
+        builder.Services.AddAuthentication(opt =>
         {
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(option =>
+            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(opt =>
         {
-            option.TokenValidationParameters = new TokenValidationParameters
+            opt.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidAudience = builder.Configuration.GetSection("Jwt:audience").Value,
-                ValidIssuer = builder.Configuration.GetSection("Jwt:issuer").Value,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:securityKey").Value)),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = builder.Configuration["JWT:Issuer"],
+                ValidAudience = builder.Configuration["JWT:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+                LifetimeValidator = (notBefore, expired, token, param) => token != null ? expired > DateTime.UtcNow : false
+
+
+
             };
         });
+
+        builder.Services.AddAuthorization();
+
+
+        //builder.Services.AddAuthentication(options =>
+        //{
+        //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        //}).AddJwtBearer(option =>
+        //{
+        //    option.TokenValidationParameters = new TokenValidationParameters
+        //    {
+        //        ValidAudience = builder.Configuration.GetSection("Jwt:audience").Value,
+        //        ValidIssuer = builder.Configuration.GetSection("Jwt:issuer").Value,
+        //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:securityKey").Value)),
+        //    };
+        //});
         //    builder.Services.AddSwaggerGen(c =>
         //    {
         //        c.SwaggerDoc("v1", new OpenApiInfo { Title = "FinalProject", Version = "v1" });
