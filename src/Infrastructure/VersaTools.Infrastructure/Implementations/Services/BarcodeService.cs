@@ -6,6 +6,7 @@ using VersaTools.Application.Abstractions.Services;
 using ZXing;
 using ZXing.Common;
 
+
 namespace VersaTools.Infrastructure.Implementations.Services
 {
     public class BarcodeService : IBarcodeService
@@ -32,7 +33,7 @@ namespace VersaTools.Infrastructure.Implementations.Services
                     Width = 300,
                     Margin = 10
                 },
-                //   Renderer = new BitmapRenderer() 
+                Renderer = new SKBitmapRenderer()
             };
 
             SKBitmap bitmap = writer.Write(text);
