@@ -1,10 +1,3 @@
-
-
-
-
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Stripe;
 using VersaTools.Application.ServiceRegistration;
@@ -19,26 +12,6 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        //        builder.Services.AddAuthentication(options =>
-        //        {
-        //            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        //            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        //        })
-        //.AddJwtBearer(options =>
-        //{
-        //    options.SaveToken = true;
-        //    options.TokenValidationParameters = new TokenValidationParameters
-        //    {
-        //        ValidateIssuer = true,
-        //        ValidateAudience = true,
-        //        ValidateLifetime = true,
-        //        ValidateIssuerSigningKey = true,
-        //        ValidIssuer = builder.Configuration["JWT:Issuer"],
-        //        ValidAudience = builder.Configuration["JWT:Audience"],
-        //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
-        //        ClockSkew = TimeSpan.Zero
-        //    };
-        //});
 
         builder.Services.AddSwaggerGen(c =>
         {
@@ -67,74 +40,32 @@ public class Program
         }
     });
         });
-        builder.Services.AddAuthentication(opt =>
-        {
-            opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(opt =>
-        {
-            opt.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
+        //builder.Services.AddAuthentication(opt =>
+        //{
+        //    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        //    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        //}).AddJwtBearer(opt =>
+        //{
+        //    opt.TokenValidationParameters = new TokenValidationParameters
+        //    {
+        //        ValidateIssuer = true,
+        //        ValidateAudience = true,
+        //        ValidateLifetime = true,
+        //        ValidateIssuerSigningKey = true,
 
-                ValidIssuer = builder.Configuration["JWT:Issuer"],
-                ValidAudience = builder.Configuration["JWT:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
-                LifetimeValidator = (notBefore, expired, token, param) => token != null ? expired > DateTime.UtcNow : false
+        //        ValidIssuer = builder.Configuration["JWT:Issuer"],
+        //        ValidAudience = builder.Configuration["JWT:Audience"],
+        //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
+        //        LifetimeValidator = (notBefore, expired, token, param) => token != null ? expired > DateTime.UtcNow : false
 
 
 
-            };
-        });
-
+        //    };
+        //});
+        builder.Services.AddAuthentication();
         builder.Services.AddAuthorization();
 
 
-        //builder.Services.AddAuthentication(options =>
-        //{
-        //    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-        //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        //}).AddJwtBearer(option =>
-        //{
-        //    option.TokenValidationParameters = new TokenValidationParameters
-        //    {
-        //        ValidAudience = builder.Configuration.GetSection("Jwt:audience").Value,
-        //        ValidIssuer = builder.Configuration.GetSection("Jwt:issuer").Value,
-        //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Jwt:securityKey").Value)),
-        //    };
-        //});
-        //    builder.Services.AddSwaggerGen(c =>
-        //    {
-        //        c.SwaggerDoc("v1", new OpenApiInfo { Title = "FinalProject", Version = "v1" });
-
-        //        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-        //        {
-        //            Description = "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-        //            Name = "Authorization",
-        //            In = ParameterLocation.Header,
-        //            Type = SecuritySchemeType.ApiKey,
-        //            Scheme = "Bearer"
-        //        });
-
-        //        c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        //{
-        //    {
-        //        new OpenApiSecurityScheme
-        //        {
-        //            Reference = new OpenApiReference
-        //            {
-        //                Type = ReferenceType.SecurityScheme,
-        //                Id = "Bearer"
-        //            }
-        //        },
-        //        new string[] {}
-        //    }
-        //});
-        //    });
 
 
         builder.Services.AddControllers();
@@ -145,7 +76,7 @@ public class Program
                          .AddInfrastructureServices()
                          .AddApplicationServices();
 
-        //builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
         builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
         StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe")["SecretKey"];
         var app = builder.Build();

@@ -60,7 +60,7 @@ namespace VersaTools.Persistence.Implementations.Services
                 await _userManager.AccessFailedAsync(user);
                 throw new Exception("Username, Email or Password is incorrect");
             }
-            return await _handler.CreateToken(user, 15);
+            return _handler.CreateToken(user, 15);
 
         }
         public async Task RegisterAsync(RegisterDto userDto)
