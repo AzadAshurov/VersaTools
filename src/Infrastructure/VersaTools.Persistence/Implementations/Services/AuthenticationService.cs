@@ -53,6 +53,7 @@ namespace VersaTools.Persistence.Implementations.Services
             if (user == null)
                 throw new Exception("Username, Email or Password is incorrect");
 
+
             bool result = await _userManager.CheckPasswordAsync(user, userDto.Password);
 
             if (!result)
