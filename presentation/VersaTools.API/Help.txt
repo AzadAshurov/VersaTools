@@ -2,7 +2,7 @@
 //docker build -t versatools-server .
 docker run -d -p 8000:8000 --name versatools-server versatools-server
 
-cd
+cd    
 
 
 stop

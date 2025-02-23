@@ -11,6 +11,7 @@ using VersaTools.Persistence.Implementations.Repositories;
 using VersaTools.Persistence.Implementations.Repositories.Generic;
 using VersaTools.Persistence.Implementations.Services;
 
+
 namespace VersaTools.Persistence.ServiceRegistration
 {
     public static class ServiceRegistration
@@ -40,7 +41,8 @@ namespace VersaTools.Persistence.ServiceRegistration
 
 
 
-
+            services.AddScoped<IResponseRepository, ResponseRepository>();
+            services.AddScoped<IResponseService, ResponseService>();
             services.AddScoped<IQuestionRepository, QuestionRepository>();
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
