@@ -6,14 +6,15 @@ using VersaTools.Persistence.Implementations.Repositories.Generic;
 
 namespace VersaTools.Persistence.Implementations.Repositories
 {
-    public class QuestionRepository : Repository<Question>, IQuestionRepository
+    public class ComplaintRepository : Repository<Complaint>, IComplaintRepository
     {
-        public QuestionRepository(AppDbContext context) : base(context)
+        public ComplaintRepository(AppDbContext context) : base(context)
         {
         }
-        public async Task<Question> GetBySpecialIdAsync(string specialId)
+
+        public async Task<Complaint> GetBySpecialIdAsync(string specialId)
         {
-            return await _context.Questions.FirstOrDefaultAsync(x => x.SpecificId == specialId);
+            return await _context.Complaints.FirstOrDefaultAsync(x => x.SpecificId == specialId);
         }
     }
 }

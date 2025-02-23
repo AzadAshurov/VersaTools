@@ -39,7 +39,8 @@ namespace VersaTools.Persistence.ServiceRegistration
 
             services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-
+            services.AddScoped<IComplaintRepository, ComplaintRepository>();
+            services.AddScoped<IComplaintService, ComplaintService>();
 
             services.AddScoped<IResponseRepository, ResponseRepository>();
             services.AddScoped<IResponseService, ResponseService>();
